@@ -19,9 +19,11 @@ struct CounterApp: App {
     @State var name = ""
 
     var body: some Scene {
-        WindowGroup("CounterExample: \(count)") {
+        WindowGroup("Inspect modifier and custom native views") {
             #hotReloadable {
                 ScrollView {
+                    CustomNativeButton(label: "Custom native button")
+
                     HStack(spacing: 20) {
                         Button("-") {
                             count -= 1
@@ -32,10 +34,7 @@ struct CounterApp: App {
                                 #if canImport(AppKitBackend)
                                     text.isSelectable = true
                                 #elseif canImport(UIKitBackend)
-                                    #if !targetEnvironment(macCatalyst)
-                                        text.isHighlighted = true
-                                        text.highlightTextColor = .yellow
-                                    #endif
+                                    text.isUserInteractionEnabled = true
                                 #elseif canImport(WinUIBackend)
                                     text.isTextSelectionEnabled = true
                                 #elseif canImport(GtkBackend)
